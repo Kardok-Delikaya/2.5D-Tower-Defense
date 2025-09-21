@@ -87,8 +87,8 @@ public class EnemyManager : MonoBehaviour
 
         currentWaveCoolDown = waves[currentWave].timeBeforeWave;
     }
-    
-    IEnumerator GameLoop()
+
+    private IEnumerator GameLoop()
     {
         while (loopShouldEnd == false)
         {

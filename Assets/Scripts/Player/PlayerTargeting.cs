@@ -47,7 +47,7 @@ public static class PlayerTargeting
         return null;
     }
 
-    struct EnemyData
+    private struct EnemyData
     {
         public EnemyData(Vector3 position, int enemyIndex)
         {
@@ -59,7 +59,7 @@ public static class PlayerTargeting
         public int EnemyIndex;
     }
 
-    struct SearchForEnemy : IJobFor
+    private struct SearchForEnemy : IJobFor
     {
         public NativeArray<EnemyData> _EnemiesToCalculate;
         public NativeArray<int> _EnemyToIndex;

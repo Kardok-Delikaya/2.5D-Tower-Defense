@@ -33,11 +33,18 @@ public class UIManager : MonoBehaviour
         {
             gameEndText.text = "!!!You are dead!!!";
             revivePlayerButton.gameObject.SetActive(true);
+            revivePlayerButton.onClick.AddListener(RevivePlayer);
         }
     }
 
-    void RestartGame()
+    private void RestartGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void RevivePlayer()
+    {
+        gameEndPanel.SetActive(false);
+        revivePlayerButton.gameObject.SetActive(false);
     }
 }
