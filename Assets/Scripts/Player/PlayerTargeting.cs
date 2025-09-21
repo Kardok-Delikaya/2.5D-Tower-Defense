@@ -2,9 +2,9 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
 
-public class PlayerTargeting
+public static class PlayerTargeting
 {
-    public static Enemy GetNearestEnemy(PlayerCombatManager player)
+    public static Enemy GetNearestEnemy(Player player)
     {
         Collider[] EnemiesInRange = Physics.OverlapSphere(player.transform.position, player.currentWeapon.range, player.enemyLayer);
         NativeArray<EnemyData> EnemiesToCalculate = new NativeArray<EnemyData>(EnemiesInRange.Length, Allocator.TempJob);
@@ -16,7 +16,7 @@ public class PlayerTargeting
             Enemy CurrentEnemy = EnemiesInRange[i].GetComponent<Enemy>();
             int EnemyIndexInList = EnemySummoner.EnemiesInGame.FindIndex(x => x == CurrentEnemy);
             
-            EnemiesToCalculate[i] = new EnemyData(CurrentEnemy.transform.position, CurrentEnemy.NodeIndex, EnemyIndexInList, CurrentEnemy.Health);
+            EnemiesToCalculate[i] = new EnemyData(CurrentEnemy.transform.position,  EnemyIndexInList);
         }
 
         SearchForEnemy EnemySearchJob = new SearchForEnemy
@@ -49,18 +49,14 @@ public class PlayerTargeting
 
     struct EnemyData
     {
-        public EnemyData(Vector3 position, int nodeIndex, int enemyIndex, int health)
+        public EnemyData(Vector3 position, int enemyIndex)
         {
             EnemyPosition=position;
             EnemyIndex = enemyIndex;
-            NodeIndex=nodeIndex;
-            Health = health;
         }
 
         public Vector3 EnemyPosition;
         public int EnemyIndex;
-        public int NodeIndex;
-        public int Health;
     }
 
     struct SearchForEnemy : IJobFor

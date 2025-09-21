@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2929455986258233495}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7406602, y: -0.73777, z: -1.78175}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b91f89b45112db46b162a0b7d51da31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  NodeIndex: 0
+  CheckPointIndex: 0
   MaxHealth: 5
   Health: 5
   Speed: 1
@@ -148,9 +148,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 0.2}
+  m_Size: {x: 2, y: 2, z: 0.2}
   m_Center: {x: 0, y: 0.90000004, z: 0}
