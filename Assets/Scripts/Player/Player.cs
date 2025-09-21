@@ -6,24 +6,28 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private int health;
-    private bool isDead;
-    private bool isInvincible;
-    private readonly List<SpriteRenderer> spritesOnPlayer=new List<SpriteRenderer>();
-    
     [Header("Player Combat")]
     [SerializeField] private int maxHealth = 50;
     public LayerMask enemyLayer;
     public StandardWeapon currentWeapon;
     [SerializeField] private StandardWeapon[] weaponsOnPlayer;
+    private readonly List<SpriteRenderer> spritesOnPlayer=new List<SpriteRenderer>();
+    private bool isInvincible;
+    private bool isDead;
+    private int health;
     
     [Header("Player Movement")]
     [SerializeField] private float speed=5;
+    [SerializeField] private AudioClip walkSound;
+    private AudioSource audioSource;
+    private float walkSoundTimer;
     private Vector3 movement;
     
     private void Start()
     {
         spritesOnPlayer.AddRange(GetComponentsInChildren<SpriteRenderer>());
+        audioSource=GetComponent<AudioSource>();
+        audioSource.clip = walkSound;
         health = maxHealth;
         UIManager.instance.revivePlayerButton.onClick.AddListener(RevivePlayer);
         TakeDamage(0);
@@ -34,6 +38,7 @@ public class Player : MonoBehaviour
         if (isDead) return;
         
         HandleMovement();
+        HandleWalkSound();
         HandleCurrentWeapon();
     }
 
@@ -67,7 +72,19 @@ public class Player : MonoBehaviour
     {
         transform.Translate(movement * (speed * Time.deltaTime));
     }
-    
+
+    private void HandleWalkSound()
+    {
+        walkSoundTimer -= Time.deltaTime;
+        
+        if (movement.magnitude > 0&&walkSoundTimer<0)
+        {
+            walkSoundTimer = .5f;
+            audioSource.pitch=Random.Range(0.8f,1.2f);
+            audioSource.Play();
+        }
+    }
+
     private IEnumerator IFrame()
     {
         isInvincible = true;
